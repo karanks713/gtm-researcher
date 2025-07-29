@@ -1,0 +1,12 @@
+.env
+smp.txt
+*ipynb
+
+*.pyc
+__pycache__/
+.vscode
+venv
+main.py
+prompts.txt
+question.txt
+streamlit_env.txt
