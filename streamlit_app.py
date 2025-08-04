@@ -168,7 +168,7 @@ def generate_pdf_report(all_results):
                 ['Company Information', ''],
                 ['Company Name', company_name],
                 ['Country', country],
-                ['Research Topic', result_data.get('research_topic', 'N/A')]
+                # ['Research Topic', result_data.get('research_topic', 'N/A')]
             ]
             
             if result_data.get("elapsed_minutes"):
@@ -191,18 +191,18 @@ def generate_pdf_report(all_results):
             story.append(Spacer(1, 15))
             
             # Search queries
-            if result_data.get("search_queries"):
-                story.append(Paragraph("Search Queries Used", subheading_style))
-                for query in result_data["search_queries"]:
-                    story.append(Paragraph(f"• {query}", body_style))
-                story.append(Spacer(1, 10))
+            # if result_data.get("search_queries"):
+            #     story.append(Paragraph("Search Queries Used", subheading_style))
+            #     for query in result_data["search_queries"]:
+            #         story.append(Paragraph(f"• {query}", body_style))
+            #     story.append(Spacer(1, 10))
             
-            # Support URLs
-            if result_data.get("support_urls"):
-                story.append(Paragraph("Support URLs Referenced", subheading_style))
-                for url in result_data["support_urls"]:
-                    story.append(Paragraph(f"• {url}", body_style))
-                story.append(Spacer(1, 10))
+            # # Support URLs
+            # if result_data.get("support_urls"):
+            #     story.append(Paragraph("Support URLs Referenced", subheading_style))
+            #     for url in result_data["support_urls"]:
+            #         story.append(Paragraph(f"• {url}", body_style))
+            #     story.append(Spacer(1, 10))
             
             # Research results
             story.append(Paragraph("Research Results", subheading_style))
@@ -394,7 +394,7 @@ def generate_markdown_report(all_results):
             "|-------|-------|",
             f"| Company Name | {company_name} |",
             f"| Country | {country} |",
-            f"| Research Topic | {result_data.get('research_topic', 'N/A')} |"
+            #f"| Research Topic | {result_data.get('research_topic', 'N/A')} |"
         ])
         
         if result_data.get("elapsed_minutes"):
@@ -403,24 +403,24 @@ def generate_markdown_report(all_results):
         markdown_parts.extend(["", ""])
         
         # Search queries
-        if result_data.get("search_queries"):
-            markdown_parts.extend([
-                "## Search Queries Used",
-                ""
-            ])
-            for query in result_data["search_queries"]:
-                markdown_parts.append(f"- {query}")
-            markdown_parts.append("")
+        # if result_data.get("search_queries"):
+        #     markdown_parts.extend([
+        #         "## Search Queries Used",
+        #         ""
+        #     ])
+        #     for query in result_data["search_queries"]:
+        #         markdown_parts.append(f"- {query}")
+        #     markdown_parts.append("")
         
-        # Support URLs
-        if result_data.get("support_urls"):
-            markdown_parts.extend([
-                "## Support URLs Referenced",
-                ""
-            ])
-            for url in result_data["support_urls"]:
-                markdown_parts.append(f"- {url}")
-            markdown_parts.append("")
+        # # Support URLs
+        # if result_data.get("support_urls"):
+        #     markdown_parts.extend([
+        #         "## Support URLs Referenced",
+        #         ""
+        #     ])
+        #     for url in result_data["support_urls"]:
+        #         markdown_parts.append(f"- {url}")
+        #     markdown_parts.append("")
         
         # Research results
         markdown_parts.extend([
@@ -672,7 +672,7 @@ def generate_html_report_for_pdf(all_results):
             "<table class='info-table'>",
             f"<tr><th>Company Name</th><td>{html.escape(company_name)}</td></tr>",
             f"<tr><th>Country</th><td>{html.escape(country)}</td></tr>",
-            f"<tr><th>Research Topic</th><td>{html.escape(result_data.get('research_topic', 'N/A'))}</td></tr>",
+            # f"<tr><th>Research Topic</th><td>{html.escape(result_data.get('research_topic', 'N/A'))}</td></tr>",
         ])
         
         if result_data.get("elapsed_minutes"):
@@ -680,25 +680,25 @@ def generate_html_report_for_pdf(all_results):
         
         html_parts.append("</table>")
         
-        # Search queries
-        if result_data.get("search_queries"):
-            html_parts.extend([
-                "<div class='section-header'>Search Queries Used</div>",
-                "<ul class='query-list'>"
-            ])
-            for query in result_data["search_queries"]:
-                html_parts.append(f"<li>{html.escape(query)}</li>")
-            html_parts.append("</ul>")
+        # # Search queries
+        # if result_data.get("search_queries"):
+        #     html_parts.extend([
+        #         "<div class='section-header'>Search Queries Used</div>",
+        #         "<ul class='query-list'>"
+        #     ])
+        #     for query in result_data["search_queries"]:
+        #         html_parts.append(f"<li>{html.escape(query)}</li>")
+        #     html_parts.append("</ul>")
         
-        # Support URLs
-        if result_data.get("support_urls"):
-            html_parts.extend([
-                "<div class='section-header'>Support URLs Referenced</div>",
-                "<ul class='url-list'>"
-            ])
-            for url in result_data["support_urls"]:
-                html_parts.append(f"<li>{html.escape(url)}</li>")
-            html_parts.append("</ul>")
+        # # Support URLs
+        # if result_data.get("support_urls"):
+        #     html_parts.extend([
+        #         "<div class='section-header'>Support URLs Referenced</div>",
+        #         "<ul class='url-list'>"
+        #     ])
+        #     for url in result_data["support_urls"]:
+        #         html_parts.append(f"<li>{html.escape(url)}</li>")
+        #     html_parts.append("</ul>")
         
         # Research results
         html_parts.append("<div class='section-header'>Research Results</div>")
@@ -955,7 +955,7 @@ def generate_html_report(all_results):
             "<table class='info-table'>",
             f"<tr><th>Company Name</th><td>{company_name}</td></tr>",
             f"<tr><th>Country</th><td>{country}</td></tr>",
-            f"<tr><th>Research Topic</th><td>{result_data.get('research_topic', 'N/A')}</td></tr>",
+            # f"<tr><th>Research Topic</th><td>{result_data.get('research_topic', 'N/A')}</td></tr>",
         ])
         
         if result_data.get("elapsed_minutes"):
@@ -964,24 +964,24 @@ def generate_html_report(all_results):
         html_parts.append("</table>")
         
         # Search queries
-        if result_data.get("search_queries"):
-            html_parts.extend([
-                "<h3 class='section-header'>Search Queries Used</h3>",
-                "<ul class='query-list'>"
-            ])
-            for query in result_data["search_queries"]:
-                html_parts.append(f"<li>{html.escape(query)}</li>")
-            html_parts.append("</ul>")
+        # if result_data.get("search_queries"):
+        #     html_parts.extend([
+        #         "<h3 class='section-header'>Search Queries Used</h3>",
+        #         "<ul class='query-list'>"
+        #     ])
+        #     for query in result_data["search_queries"]:
+        #         html_parts.append(f"<li>{html.escape(query)}</li>")
+        #     html_parts.append("</ul>")
         
-        # Support URLs
-        if result_data.get("support_urls"):
-            html_parts.extend([
-                "<h3 class='section-header'>Support URLs Referenced</h3>",
-                "<ul class='url-list'>"
-            ])
-            for url in result_data["support_urls"]:
-                html_parts.append(f"<li><a href='{url}'>{html.escape(url)}</a></li>")
-            html_parts.append("</ul>")
+        # # Support URLs
+        # if result_data.get("support_urls"):
+        #     html_parts.extend([
+        #         "<h3 class='section-header'>Support URLs Referenced</h3>",
+        #         "<ul class='url-list'>"
+        #     ])
+        #     for url in result_data["support_urls"]:
+        #         html_parts.append(f"<li><a href='{url}'>{html.escape(url)}</a></li>")
+        #     html_parts.append("</ul>")
         
         # Research results
         html_parts.append("<h3 class='section-header'>Research Results</h3>")
@@ -1063,7 +1063,7 @@ def generate_docx_report(all_results):
         table.cell(1, 0).text = 'Country'
         table.cell(1, 1).text = country
         table.cell(2, 0).text = 'Research Topic'
-        table.cell(2, 1).text = result_data.get('research_topic', 'N/A')
+        # table.cell(2, 1).text = result_data.get('research_topic', 'N/A')
         
         if result_data.get("elapsed_minutes"):
             row = table.add_row()
@@ -1073,16 +1073,16 @@ def generate_docx_report(all_results):
         doc.add_paragraph()
         
         # Search queries
-        if result_data.get("search_queries"):
-            doc.add_heading('Search Queries Used', level=2)
-            for query in result_data["search_queries"]:
-                doc.add_paragraph(query, style='List Bullet')
+        # if result_data.get("search_queries"):
+        #     doc.add_heading('Search Queries Used', level=2)
+        #     for query in result_data["search_queries"]:
+        #         doc.add_paragraph(query, style='List Bullet')
         
-        # Support URLs
-        if result_data.get("support_urls"):
-            doc.add_heading('Support URLs Referenced', level=2)
-            for url in result_data["support_urls"]:
-                doc.add_paragraph(url, style='List Bullet')
+        # # Support URLs
+        # if result_data.get("support_urls"):
+        #     doc.add_heading('Support URLs Referenced', level=2)
+        #     for url in result_data["support_urls"]:
+        #         doc.add_paragraph(url, style='List Bullet')
         
         # Research results
         if "error" in result_data:
@@ -1186,14 +1186,14 @@ if num_runs > 0:
                 country = st.text_input(f"Country", 
                                       placeholder="e.g., India", 
                                       key=f"country_{run_number}")
-                research_topic = st.selectbox("Research Topic",
-                                            options=["GENERAL", "NEWS", "FINANCE"],
-                                            index=0,  # Default to "general" (first option)
-                                            key=f"topic_{run_number}"
-                                        )
-                research_topic = research_topic.lower()
+                # research_topic = st.selectbox("Research Topic",
+                #                             options=["GENERAL", "NEWS", "FINANCE"],
+                #                             index=0,  # Default to "general" (first option)
+                #                             key=f"topic_{run_number}"
+                #                         )
+                # research_topic = research_topic.lower()
                 search_queries = st.text_input(f"Search Queries", 
-                                             placeholder="Enter your queries separated by forward slash, e.g., Question 1/Question 2", 
+                                             placeholder="Enter your queries separated by a forward slash, e.g., Question 1/  Question 2/", 
                                              key=f"queries_{run_number}")
                 support_urls = st.text_input(f"Support URLs", 
                                            placeholder="Enter your links seperated by comma, e.g., https://www.xyz.com/home, https://www.xyz.com/contact", 
@@ -1210,7 +1210,7 @@ if num_runs > 0:
                         state = {
                             "company_name": company_name, 
                             "country": country, 
-                            "research_topic": research_topic,
+                            # "research_topic": research_topic,
                             "search_queries": search_queries.split("/") if search_queries else None,
                             "support_urls": support_urls.split(",") if support_urls else None,
                             "prompt": prompt,
@@ -1274,7 +1274,7 @@ if num_runs > 0:
                             start_time = time.time()
                             result = common_structure(company_name=state.get('company_name'),
                                                       country=state.get('country'),
-                                                      research_topic=state.get('research_topic'),
+                                                      # research_topic=state.get('research_topic'),
                                                       search_queries=state.get('search_queries'),
                                                       prompt=state.get('prompt'),
                                                       support_urls=state.get('support_urls')
@@ -1288,11 +1288,11 @@ if num_runs > 0:
                                 "run_number": run_number,
                                 "company_name": state['company_name'],
                                 "country": state['country'],
-                                "research_topic": state['research_topic'],
+                                # "research_topic": state['research_topic'],
                                 "elapsed_minutes": elapsed_minutes,
                                 "result": result,
-                                "state": state,
-                                "search_queries": state.get('search_queries', []),
+                                #"state": state,
+                                #"search_queries": state.get('search_queries', []),
                                 "support_urls": state.get('support_urls', [])
                             }
                             all_results.append(result_with_metadata)
@@ -1309,12 +1309,12 @@ if num_runs > 0:
                                 "run_number": run_number,
                                 "company_name": state['company_name'],
                                 "country": state['country'],
-                                "research_topic": state['research_topic'],
+                                # "research_topic": state['research_topic'],
                                 "elapsed_minutes": 0,
                                 "error": str(e),
                                 "result": None,
                                 "state": state,
-                                "search_queries": state.get('search_queries', []),
+                                #"search_queries": state.get('search_queries', []),
                                 "support_urls": state.get('support_urls', [])
                             }
                             all_results.append(error_result)
