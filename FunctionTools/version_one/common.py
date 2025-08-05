@@ -33,8 +33,8 @@ def common_structure(company_name:str = None,
             company_name=company_name,
             country=country,
             search_queries=search_queries,
-            batch_size=os.getenv('QUERY_BATCH_SIZE'),
-            delay_between_batches=os.getenv('DELAY_BETWEEN_BATCHES')
+            batch_size=int(os.getenv('QUERY_BATCH_SIZE')),
+            delay_between_batches=int(os.getenv('DELAY_BETWEEN_BATCHES'))
         )
         
         if support_urls is not None:
