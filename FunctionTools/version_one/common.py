@@ -16,15 +16,15 @@ llm = connector.connect_azure_open_ai("gpt-4o-mini")
 
 def common_structure(company_name:str = None, 
                      country:str = None, 
-                     research_topic:str = None, 
-                     search_queries:List[str] = None, 
+                     # research_topic:str = None, 
+                     search_queries: List[str] = None, 
                      prompt:str = None, 
                      support_urls:List[str] = None) -> dict:
     try:
         if prompt is None:
             raise ValueError("required parameter prompt is missing")
         if search_queries is None:
-            search_queries = generate_questions(company_name, prompt)
+            search_queries = generate_questions(company_name, prompt)['questions']
         print(f"Searching for {company_name} company in {country}...")
         def get_response(prompt:str):
             return llm.invoke(prompt)
@@ -33,8 +33,8 @@ def common_structure(company_name:str = None,
             company_name=company_name,
             country=country,
             search_queries=search_queries,
-            batch_size=2,
-            delay_between_batches=2
+            batch_size=os.getenv('QUERY_BATCH_SIZE'),
+            delay_between_batches=os.getenv('DELAY_BETWEEN_BATCHES')
         )
         
         if support_urls is not None:
@@ -45,7 +45,7 @@ def common_structure(company_name:str = None,
 
         response_data = {"company_name": company_name,
                          "country": country,
-                         "search_queries": search_queries,
+                         # "search_queries": search_queries,
                          "support_urls": support_urls,
                          "prompt": prompt,
                          "final_data":{"web_response": response.content}}

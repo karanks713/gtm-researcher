@@ -50,12 +50,11 @@ def process_perplexity_in_batches(company_name: str, country: str, search_querie
         try:
             print(f"Searching: {query}")
             
-            perplexity_result = research(f"For {company_name} company located in {country}, {query}")
+            perplexity_result = research(f"For {company_name} company located in {country}, Answer the following Question in detail: {query}.")
             
             content = perplexity_result['choices'][0]['message']['content']
-            urls = perplexity_result['citations']
             
-            print(f"✓ Completed: {query}, Resources: {urls}")
+            print(f"✓ Completed: {query}")
             return content
             
         except Exception as e:
