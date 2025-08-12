@@ -1,25 +1,23 @@
 import streamlit as st
-import pandas as pd
 from FunctionTools.version_one.common import common_structure
 import traceback
 import time
 from datetime import datetime
 from io import BytesIO
 import markdown
-from reportlab.lib.pagesizes import letter, A4
+from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
+from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
 from docx import Document
-from docx.shared import Inches
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 import re
 import html
 from bs4 import BeautifulSoup
 
-def clean_markdown_text(text):
+def clean_markdown_text(text:str):
     """Clean and prepare markdown text for conversion"""
     if not text:
         return ""
@@ -1186,12 +1184,6 @@ if num_runs > 0:
                 country = st.text_input(f"Country", 
                                       placeholder="e.g., India", 
                                       key=f"country_{run_number}")
-                # research_topic = st.selectbox("Research Topic",
-                #                             options=["GENERAL", "NEWS", "FINANCE"],
-                #                             index=0,  # Default to "general" (first option)
-                #                             key=f"topic_{run_number}"
-                #                         )
-                # research_topic = research_topic.lower()
                 search_queries = st.text_input(f"Search Queries", 
                                              placeholder="Enter your queries separated by a forward slash, e.g., Question 1/  Question 2/", 
                                              key=f"queries_{run_number}")
@@ -1367,6 +1359,12 @@ if num_runs > 0:
                                 
                                 structured_data = result.get("structured_data", {})
                                 final_data = result.get("final_data", {})
+                                if final_data:
+                                    col_tok, col_cost = st.columns(2)
+                                    with col_tok:
+                                        st.metric("Total Tokens", final_data.get("total_tokens", 0))
+                                    with col_cost:
+                                        st.metric("Total Cost ($)", final_data.get('total_cost', 0))
                                 
                                 # Display the research results
                                 st.subheader(f"{company_name}'s Research Results")

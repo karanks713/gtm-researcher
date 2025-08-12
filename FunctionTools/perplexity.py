@@ -3,7 +3,7 @@ import time
 import requests
 import traceback
 import os
-from typing import List
+from typing import List, Dict, Any
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -29,7 +29,7 @@ def research(text):
         raise Exception(f"Error in deep_research: {e}")
     
     
-def process_perplexity_in_batches(company_name: str, country: str, search_queries: List[str], batch_size: int=4, delay_between_batches: int=2):
+def process_perplexity_in_batches(company_name: str, country: str, search_queries: List[str], batch_size: int=2, delay_between_batches: int=2) -> Dict[str, Any]:
     """
     Process Perplexity queries in batches with threading
     
@@ -50,18 +50,24 @@ def process_perplexity_in_batches(company_name: str, country: str, search_querie
         try:
             print(f"Searching: {query}")
             
-            perplexity_result = research(f"For {company_name} company located in {country}, Answer the following Question in detail: {query}.")
+            perplexity_result = research(f"For {company_name} company located in {country}, Answer the following Question in detail: \n{query}.")
             
             content = perplexity_result['choices'][0]['message']['content']
+            tokens = perplexity_result['usage']['total_tokens']
+            cost = perplexity_result['usage']['cost']['total_cost']
+            source = perplexity_result['citations']
             
             print(f"✓ Completed: {query}")
-            return content
+            return {'content': content, 'tokens': tokens, 'cost': cost, 'source': source} 
             
         except Exception as e:
             print(f"✗ ERROR in query '{query}': {e}")
             raise RuntimeError(f"Error in query '{query}': {e}")
     
     all_results = ""
+    total_cost = 0
+    total_tokens = 0
+    citations = []
     total_queries = len(search_queries)
     
     # Process queries in batches
@@ -80,7 +86,10 @@ def process_perplexity_in_batches(company_name: str, country: str, search_querie
             for future in futures:
                 result = future.result()
                 if result:  # Only add non-empty results
-                    all_results += result + "\n"
+                    all_results += result['content'] + "\n"
+                    total_tokens += result['tokens']
+                    total_cost += result['cost']
+                    citations.extend(result['source'])
         
         print(f"[BATCH {batch_num}] Completed!")
         
@@ -89,4 +98,4 @@ def process_perplexity_in_batches(company_name: str, country: str, search_querie
             print(f"Waiting {delay_between_batches} seconds before next batch...")
             time.sleep(delay_between_batches)
     
-    return all_results
+    return {"content": all_results, "total_tokens": total_tokens, "total_cost": total_cost, "citations": citations}
